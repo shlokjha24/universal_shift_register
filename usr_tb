@@ -1,0 +1,59 @@
+module usr_tb;
+reg [1:0]s;
+reg clk;
+reg in_sl;
+reg in_sr;
+reg [3:0]pload;
+
+wire [3:0]q;
+
+usr uut(
+.s(s),
+.clk(clk),
+.in_sl(in_sl),
+.in_sr(in_sr),
+.pload(pload),
+.q(q)
+   );   
+ 
+ initial begin
+clk = 0;
+forever #5 clk=~clk;
+end
+
+initial begin
+s=2'b00;
+in_sl=0;
+in_sr=0;
+pload=4'b0000;
+#10;
+ 
+ pload=4'b1010;
+ s=2'b11;
+ #2;
+ @(posedge clk);
+ $display("The output is %b when input is 11",q);
+ 
+ s=2'b00;
+ #2;
+ @(posedge clk);
+ $display("The output is %b when 00",q);
+ 
+  s=2'b10;
+  in_sr=1;
+  #2;
+  repeat(2) @(posedge clk);
+  $display("The output is %b when 10",q);
+  
+  
+  s=2'b01;
+    in_sl=1;
+    #2;
+    repeat(2) @(posedge clk);
+    $display("The output is %b when 01",q);
+ end
+ 
+   
+   
+ 
+endmodule
