@@ -1,0 +1,10 @@
+module dflipflop(
+input clk,
+input d,
+output reg y
+    );
+always @ (posedge clk) begin
+y <= d;
+end 
+
+endmodule
